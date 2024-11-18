@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class Action : MonoBehaviour
 {
 
-    float cooldownDuration;
+    [SerializeField] protected float cooldownDuration;
 
-    float cooldownTimer;
+    [SerializeField] float cooldownTimer;
     public void DoAction()
     {
         if (cooldownTimer <= 0)

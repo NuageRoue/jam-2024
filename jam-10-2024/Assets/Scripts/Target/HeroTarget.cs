@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 
@@ -8,11 +6,15 @@ public class HeroTarget : Target
 {
     [SerializeField] float awarenessRadius;
     [SerializeField] LayerMask layer;
+    [SerializeField] float delayToTarget;
     Behaviour behaviour;
     protected override void AcquireTarget()
     {
-        behaviour = GetComponent<Behaviour>();
-        SelectTarget(Physics2D.OverlapCircleAll(transform.position, awarenessRadius, layer.value));
+        if (targetToFollow == null)
+        {
+            behaviour = GetComponent<Behaviour>();
+            SelectTarget(Physics2D.OverlapCircleAll(transform.position, awarenessRadius, layer.value));
+        }
     }
 
     private void SelectTarget(Collider2D[] collider2Ds)
@@ -25,7 +27,16 @@ public class HeroTarget : Target
             monsters[i] = collider2Ds[i].GetComponent<Monster>();
         }
         Sort(monsters);
-        targetToFollow = GetNearestMonster(monsters);
+        
+        StartCoroutine("DelayTargetting", GetNearestMonster(monsters));
+        DelayTargetting(GetNearestMonster(monsters));
+    }
+
+    IEnumerator DelayTargetting(Transform monster)
+    {
+        yield return new WaitForSeconds(delayToTarget * Vector3.Distance(transform.position, monster.position));
+        targetToFollow = monster;
+        
     }
 
     private Transform GetNearestMonster(Monster[] monsters)
@@ -62,8 +73,6 @@ public class HeroTarget : Target
                     monsterB += (int)Monsters.type9;
                 if (monsterA > monsterB)//collider2Ds[j] > collider2Ds[j + 1])
                 {
-
-                    // Swap arr[j] and arr[j+1]
                     temp = monsters[j];
                     monsters[j] = monsters[j + 1];
                     monsters[j + 1] = temp;

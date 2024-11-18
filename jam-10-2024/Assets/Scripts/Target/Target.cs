@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -39,7 +40,8 @@ public abstract class Target : MonoBehaviour
 
     public void GetTargetPosition()
     {
-        targetPosition = targetToFollow.position;
+        if (targetToFollow)
+            targetPosition = targetToFollow.position;
     }
 
     protected abstract void AcquireTarget();
@@ -52,5 +54,10 @@ public abstract class Target : MonoBehaviour
     public bool IsSelf()
     {
         return (targetToFollow == transform);
+    }
+
+    internal bool HasTarget()
+    {
+        return targetToFollow != null;
     }
 }

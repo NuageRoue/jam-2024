@@ -28,9 +28,13 @@ public class Behaviour : MonoBehaviour
         {
             movement.MoveTowards(target.GetNormalizedDirection());
         }
-        else if (!isStatic)
+        else if (!isStatic && target.HasTarget())
         {
-            action.Act();
+            action.DoAction();
+        }
+        else
+        {
+            Debug.Log(name +": doing nothing");
         }
     }
 }
