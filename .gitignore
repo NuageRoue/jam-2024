@@ -1,6 +1,14 @@
 ###
 # Unity folders and files
 ###
+/SpareNone/[Aa]ssets/AssetStoreTools*
+/SpareNone/[Bb]uild/
+/SpareNone/[Ll]ibrary/
+/SpareNone/[Ll]ocal[Cc]ache/
+/SpareNone/[Oo]bj/
+/SpareNone/[Tt]emp/
+/SpareNone/[Uu]nityGenerated/
+
 /jam-10-2024/[Aa]ssets/AssetStoreTools*
 /jam-10-2024/[Bb]uild/
 /jam-10-2024/[Ll]ibrary/
